@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class EmployeesDetailsController extends AbstractController{
+class EmployeeDetailsController extends AbstractController{
     #[Route('/employees/details', name: "employees_details_page")]
     public function employeesDetailsPage(): Response
     {

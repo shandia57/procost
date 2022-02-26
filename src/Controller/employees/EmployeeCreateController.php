@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class EmployeesCreateController extends AbstractController{
+class EmployeeCreateController extends AbstractController{
     #[Route('/employees/create', name: "employees_create_page")]
     public function employeesCreatePage(): Response
     {
