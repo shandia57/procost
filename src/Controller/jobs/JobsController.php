@@ -1,15 +1,15 @@
 <?php 
 
-namespace App\Controller\projects;
+namespace App\Controller\jobs;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProjectsController extends AbstractController{
-    #[Route('/projects', name: "projects")]
+class JobsController extends AbstractController{
+    #[Route('/jobs', name: "jobs")]
     public function projectsPage(): Response
     {
-        return $this->render('pages/projects/projects.html.twig');
+        return $this->render('pages/jobs/jobs.html.twig');
     }
 }

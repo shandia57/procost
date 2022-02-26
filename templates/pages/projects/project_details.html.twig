@@ -1,1 +1,121 @@
-<h2>Projects details</h2>
+{% extends 'layout/base.html.twig' %}
+
+{% block title %} Suivi d'un projets - PROCOST {% endblock %}
+
+{% block body %}
+
+<main class="app-content">
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-users"></i>&nbsp;Suivi du projet NOM</h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#"><i class="fa fa-home fa-lg"></i></a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href={{path('employees')}}>Employés</a>
+            </li>
+            <li class="breadcrumb-item">Suivi du projet NOM</li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="tile">
+                <table class="table table-striped table-bordered table-sm">
+                    <tbody>
+                        <tr>
+                            <th>Projet</td>
+                            <td>Amazon</td>
+                        </tr>
+                        <tr>
+                            <th>Description</td>
+                            <td>Créer une application web</td>
+                        </tr>
+                        <tr>
+                            <th>Prix de vente</td>
+                            <td>50 000€</td>
+                        </tr>
+                        <tr>
+                            <th>Date de création</td>
+                            <td>26/02/2022</td>
+                        </tr>
+                        <tr>
+                            <th>Date de livraison</td>
+                            <td>29/08/2022</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre d'employés</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <th>Coût de production</td>
+                            <td>15 000€</td>
+                        </tr>
+                        <tr>
+                            <th>Temps de production</td>
+                            <td>30 jours</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="form.html" class="btn btn-info">
+                    <i class="fa fa-pencil"></i>Modifier
+                </a>
+            </div>
+
+        </div>
+        <div class="col-md-8">
+            <div class="tile pb-5">
+                <h3 class="tile-title">Historique des temps de production</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th>Prénom NOM</th>
+                                <th>Temps</th>
+                                <th>Date de saisie</th>
+                                <th>Coût total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for i in 0..10 %}
+                            <tr>
+                                <td>Shandia SAMA</td>
+                                <td>4 jours</td>
+                                <td>23-04-2018</td>
+                                <td>1 400 €</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                <nav class="float-right">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <span class="page-link">&laquo;</span>
+                        </li>
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">1<span class="sr-only">(current)</span></span>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">&raquo;</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+{% endblock %}

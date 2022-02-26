@@ -28,6 +28,8 @@
             </li>
         </ul>
     </header>
+
+
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
@@ -38,27 +40,33 @@
                 <p class="app-sidebar__user-designation">Manager</p>
             </div>
         </div>
+
+
         <ul class="app-menu">
             <li>
-                <a class="app-menu__item active" href={{path('home_page')}}>
+                <a class="app-menu__item {% if  path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params') )  == "/"  %} active {% endif %}"
+                    href={{path('home')}}>
                     <i class="app-menu__icon fa fa-dashboard"></i>
                     <span class="app-menu__label">Tableau de bord</span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href={{path('projects_page')}}>
+                <a class="app-menu__item {% if  app.request.attributes.get('_route')  starts with "project"  %} active {% endif %}"
+                    href={{path('projects')}}>
                     <i class="app-menu__icon fa fa-laptop"></i>
                     <span class="app-menu__label">Projets</span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href={{path('employees_page')}}>
+                <a class="app-menu__item {% if  app.request.attributes.get('_route')  starts with "employee"  %} active {% endif %}"
+                    href={{path('employees')}}>
                     <i class="app-menu__icon fa fa-users"></i>
                     <span class="app-menu__label">Employés</span>
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href="#">
+                <a class="app-menu__item {% if  app.request.attributes.get('_route')  starts with "job"  %} active {% endif %}"
+                    href={{path('jobs')}}>
                     <i class="app-menu__icon fa fa-book"></i>
                     <span class="app-menu__label">Métiers</span>
                 </a>
