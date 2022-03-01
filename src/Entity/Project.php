@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
@@ -11,22 +12,28 @@ class Project
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message:"Ce champ ne peut être vide")]
     private $name;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message:"Ce champ ne peut être vide")]
     private $description;
 
     #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank(message:"Ce champ ne peut être vide")]
     private $price;
 
     #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank(message:"Ce champ ne peut être vide")]
     private $create_at;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $delivery;
+
 
     public function getId(): ?int
     {
@@ -86,10 +93,11 @@ class Project
         return $this->delivery;
     }
 
-    public function setDelivery(\DateTimeInterface $delivery): self
+    public function setDelivery(?\DateTimeInterface $delivery): self
     {
         $this->delivery = $delivery;
 
         return $this;
     }
+
 }

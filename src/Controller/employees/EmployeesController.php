@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class EmployeesController extends AbstractController{
+
+
     #[Route('/employees', name: "employees")]
     public function employeesPage(): Response
     {

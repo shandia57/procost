@@ -10,30 +10,36 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Manager\ProjectManager;
+use App\Repository\ProjectRepository;
 
 
-class ProjectCreateController extends AbstractController{
+class ProjectUpdateController extends AbstractController{
 
-    public function __construct(
+    public function __construct( 
+        private ProjectRepository $projectRepo, 
         private ProjectManager $projectManager,
-    ) {
+        )
+    {
+        
     }
 
-    #[Route('/projects/create', name: "project_create", methods: ['POST', 'GET'])]
-    public function projectsCreatePage(Request $request): Response
+    #[Route('/projects/update/{id}', name: "project_update")]
+    public function projectsUpdatePage(int $id, Request $request): Response
     {
-        $project = new Project();
+        $project = $this->projectRepo->find($id);
+
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
         if($form->isSubmitted()  && $form->isValid()){
-            $this->addFlash('success', 'Le projet a été créée avec succès !');
+            $this->addFlash('success', 'Le projet a correctement modifié !');
             $this->projectManager->save($project);
         }
-
-        return $this->render('pages/projects/project_create.html.twig', [
+        return $this->render('pages/projects/project.update.html.twig', [
+            'project' => $project,
             'form' => $form->createView(),
+
         ]);
+
     }
 }
-
