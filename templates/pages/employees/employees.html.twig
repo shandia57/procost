@@ -37,18 +37,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for i in 0..5 %}
+                    {% for employee in employees %}
                     <tr>
-                        <td>Prénom NOM</td>
-                        <td>test@example.com</td>
-                        <td>Web designer</td>
-                        <td>200 €</td>
-                        <td>Avril 2018</td>
+                        <td>{{employee.firstname}} {{employee.lastname}}</td>
+                        <td>{{employee.email}}</td>
+                        <td>{{employee.job.name}}</td>
+                        <td>{{employee.cost}}</td>
+                        <td>{{employee.startedJob|date("d/m/Y", false)}}</td>
                         <td>
-                            <a href={{path('employees_details')}} class="btn btn-primary btn-sm">
+                            <a href={{path('employees_details', {'id': employee.id})}} class="btn btn-primary btn-sm">
                                 <i class="fa fa-eye mr-0"></i>
                             </a>
-                            <a href="#" class="btn btn-info btn-sm">
+                            <a href={{path('employees_update', {'id': employee.id})}} class="btn btn-info btn-sm">
                                 <i class="fa fa-pencil mr-0"></i>
                             </a>
                         </td>

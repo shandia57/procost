@@ -51,15 +51,22 @@
                         </tr>
                         <tr>
                             <th>Nombre d'employés</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>Coût de production</td>
-                            <td></td>
+
+                            <td>{{numberEmployee.number}}</td>
+
+
                         </tr>
                         <tr>
                             <th>Temps de production</td>
-                            <td></td>
+                            <td>{{timeProduction.time}}</td>
+                        </tr>
+                        <tr>
+                            {% for assigne in assigned %}
+                            {% set totalPrice = totalPrice + (assigne.timeProduction * assigne.employee.cost) %}
+                            {% endfor %}
+
+                            <th>Coût de production</td>
+                            <td>{{totalPrice}}</td>
                         </tr>
 
                     </tbody>
@@ -69,28 +76,6 @@
                 </a>
             </div>
 
-            <div class="tile">
-                <h3 class="title-title mb-4">Ajouter un temps</h3>
-                <form class="form-horizontal">
-                    <div class="form-group row">
-                        <label for="select-projects" class="control-label col-md-6">Projet concerné</label>
-                        <div class="col-md-6">
-                            {{project.name}}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="days-count" class="control-label col-md-6">Nombre de jours</label>
-                        <div class="col-md-6">
-                            <input id="days-count" class="form-control" type="number" min="1">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="offset-md-6 col-md-8">
-                            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Enregistrer</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
 
         </div>
         <div class="col-md-8">
@@ -108,12 +93,12 @@
                         </thead>
                         <tbody>
 
-                            {% for i in 0..10 %}
+                            {% for assigne in assigned %}
                             <tr>
-                                <td>Shandia SAMA</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
+                                <td>{{assigne.employee.firstname|capitalize}} {{assigne.employee.lastname|upper}}</td>
+                                <td>{{assigne.timeProduction}}</td>
+                                <td>{{assigne.publishedAt|date("d/m/Y", false) }}</td>
+                                <td>{{ assigne.timeProduction * assigne.employee.cost }}€</td>
                             </tr>
                             {% endfor %}
                         </tbody>

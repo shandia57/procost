@@ -7,7 +7,8 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-users"></i>&nbsp;Suivi de Prénom NOM</h1>
+            <h1><i class="fa fa-users"></i>&nbsp;Suivi de {{employee.firstname|capitalize}} {{employee.lastname|upper}}
+            </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item">
@@ -16,7 +17,7 @@
             <li class="breadcrumb-item">
                 <a href={{path('employees')}}>Employés</a>
             </li>
-            <li class="breadcrumb-item">Suivi de Prénom NOM</li>
+            <li class="breadcrumb-item">Suivi de {{employee.firstname|capitalize}} {{employee.lastname|upper}}</li>
         </ul>
     </div>
     <div class="row">
@@ -26,55 +27,65 @@
                     <tbody>
                         <tr>
                             <th>Prénom</td>
-                            <td>Jack</td>
+                            <td>{{employee.firstname}}</td>
                         </tr>
                         <tr>
                             <th>Nom</td>
-                            <td>FROST</td>
+                            <td>{{employee.lastname}}</td>
                         </tr>
                         <tr>
                             <th>Email</td>
-                            <td>jfrost@procost.com</td>
+                            <td>{{employee.email}}</td>
                         </tr>
                         <tr>
                             <th>Métier</td>
-                            <td>Web developer</td>
+                            <td>{{employee.job.name}}</td>
                         </tr>
                         <tr>
                             <th>Coût journalier</td>
-                            <td>500 €</td>
+                            <td>{{employee.cost}} €</td>
                         </tr>
                         <tr>
                             <th>Date d'embauche</td>
-                            <td>1 mai 2018</td>
+                            <td>{{employee.startedJob|date("d/m/Y", false)}}</td>
                         </tr>
                     </tbody>
                 </table>
-                <a href="form.html" class="btn btn-info">
+                <a href={{path('employees_update', {'id': employee.id})}} class="btn btn-info">
                     <i class="fa fa-pencil"></i>Modifier
                 </a>
             </div>
             <div class="tile">
+
                 <h3 class="title-title mb-4">Ajouter un temps</h3>
-                <form class="form-horizontal">
+                {% for message in app.flashes('success') %}
+                <div class="alert alert-dismissible alert-success my-4">
+                    <button class="close" type="button" data-dismiss="alert">×</button><strong>Super!</strong>
+                    {{message}}
+                </div>
+                {% endfor %}
+
+                <div class="form-horizontal">
+                    {{ form_start(form) }}
+
                     <div class="form-group row">
-                        <label for="select-projects" class="control-label col-md-6">Projet concerné</label>
+                        {{ form_label(form.project, form.project, {'label_attr': {'class': 'control-label col-md-6'}})
+                        }}
                         <div class="col-md-6">
-                            <select class="form-control" id="select-projects">
-                                <option>Projet 1</option>
-                                <option>Projet 2</option>
-                                <option>Projet 3</option>
-                                <option>Projet 4</option>
-                                <option>Projet 5</option>
-                                <option>Projet 6</option>
-                                <option>Projet 7</option>
-                            </select>
+                            {{form_widget(form.project, {'attr': {'class': 'form-control' }})}}
+                            <div class="form-control-feedback text-danger">
+                                {{form_errors(form.project)}}
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="days-count" class="control-label col-md-6">Nombre de jours</label>
+                        {{ form_label(form.time_production, form.time_production, {'label_attr': {'class': 'control-label col-md-6'}})
+                        }}
                         <div class="col-md-6">
-                            <input id="days-count" class="form-control" type="number" min="1">
+                            {{form_widget(form.time_production, {'attr': {'class': 'form-control' }})}}
+                            <div class="form-control-feedback text-danger">
+                                {{form_errors(form.time_production)}}
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -82,7 +93,9 @@
                             <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Enregistrer</a>
                         </div>
                     </div>
-                </form>
+                    {{ form_end(form) }}
+                </div>
+
             </div>
         </div>
         <div class="col-md-8">
@@ -99,66 +112,16 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for assigne in assigned %}
                             <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
+                                <td>{{assigne.project.name}}</td>
+                                <td>{{assigne.timeProduction}} jours</td>
+                                <td>{{assigne.publishedAt|date("d/m/Y", false) }}</td>
+                                <td> {{ assigne.timeProduction * assigne.employee.cost }}€ </td>
+
                             </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
+                            {% endfor %}
+
                         </tbody>
                     </table>
                 </div>

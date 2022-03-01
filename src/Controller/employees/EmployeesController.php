@@ -6,12 +6,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Repository\EmployeeRepository;
+
 class EmployeesController extends AbstractController{
 
+    public function __construct( private EmployeeRepository $employeeRepo)
+    {
+        
+    }
 
     #[Route('/employees', name: "employees")]
     public function employeesPage(): Response
     {
-        return $this->render('pages/employees/employees.html.twig');
+        $employees = $this->employeeRepo->findAll();
+        return $this->render('pages/employees/employees.html.twig', [
+            "employees" => $employees,
+        ]);
     }
+
+
 }
