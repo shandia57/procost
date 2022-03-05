@@ -32,10 +32,16 @@ class ProjectUpdateController extends AbstractController{
         $form->handleRequest($request);
 
         if($form->isSubmitted()  && $form->isValid()){
-            $this->addFlash('success', 'Le projet a correctement modifié !');
-            $this->projectManager->save($project);
+            if($project->getDelivery() != null){
+                $this->addFlash('danger', 'Vous ne pouvez faire aucune action lorsqu\'un projet est livré');
+            }else{
+                $this->addFlash('success', 'Le projet a correctement modifié !');
+                $this->projectManager->save($project);
+                return $this->redirectToRoute('projects');
+            }
+            
         }
-        return $this->render('pages/projects/project.update.html.twig', [
+        return $this->render('pages/projects/project_form.html.twig', [
             'project' => $project,
             'form' => $form->createView(),
 

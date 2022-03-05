@@ -80,7 +80,7 @@ class AssignedRepository extends ServiceEntityRepository
         ->where('p.project = :id')
         ->setParameter('id', $id)
     ;
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function costProductionSingleProject(int $id): ?array
@@ -91,7 +91,7 @@ class AssignedRepository extends ServiceEntityRepository
         ->where('p.project = :id')
         ->setParameter('id', $id)
     ;
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function sumTotalTimeProduction() : array
@@ -99,7 +99,7 @@ class AssignedRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('p')
             ->select("SUM(p.time_production) as time")
         ;
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function sumTimeProductionPerProject(int $id): ?array
@@ -109,7 +109,7 @@ class AssignedRepository extends ServiceEntityRepository
         ->where('p.project = :id')
         ->setParameter('id', $id)
     ;
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function getProjectCostProduction($id): array{
@@ -122,7 +122,7 @@ class AssignedRepository extends ServiceEntityRepository
         ->andWhere("p.employee = employee.id")
         ->setParameter('id', $id)
     ;
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
 

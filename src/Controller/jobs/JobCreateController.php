@@ -28,10 +28,11 @@ class JobCreateController extends AbstractController{
         if($form->isSubmitted()  && $form->isValid()){
             $this->addFlash('success', 'Le métier a été créée avec succès !');
             $this->jobManager->save($job);
+            return $this->redirectToRoute('jobs');
         }
 
 
-        return $this->render('pages/jobs/jobs_create.html.twig', [
+        return $this->render('pages/jobs/jobs_form.html.twig', [
             'form' => $form->createView(),
         ]);
     }

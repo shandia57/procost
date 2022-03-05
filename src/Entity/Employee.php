@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EmployeeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EmployeeRepository::class)]
 class Employee
@@ -14,23 +15,31 @@ class Employee
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Ce champ ne peut pas être vide')]
     private $firstname;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Ce champ ne peut pas être vide')]
     private $lastname;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Email(message: 'Ce champ doit être un email valide')]
+    #[Assert\NotBlank(message: 'Ce champ ne peut pas être vide')]
     private $email;
 
     #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank(message: 'Ce champ ne peut pas être vide')]
     private $cost;
 
     #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank(message: 'Ce champ ne peut pas être vide')]
     private $started_job;
 
-    #[ORM\OneToOne(inversedBy: 'employee', targetEntity: Job::class, cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: Job::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $job;
+
+
 
     public function getId(): ?int
     {
@@ -102,10 +111,12 @@ class Employee
         return $this->job;
     }
 
-    public function setJob(Job $job): self
+    public function setJob(?Job $job): self
     {
         $this->job = $job;
 
         return $this;
     }
+
+
 }

@@ -61,6 +61,10 @@ html {
   width: device-width;
 }
 
+.div-elements div{
+  display: inline-block;
+}
+
 
 
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {

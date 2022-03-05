@@ -5,6 +5,7 @@
 {% block body %}
 
 <main class="app-content">
+
     <div class="app-title">
         <div>
             <h1><i class="fa fa-users"></i>&nbsp;Suivi de {{employee.firstname|capitalize}} {{employee.lastname|upper}}
@@ -20,6 +21,8 @@
             <li class="breadcrumb-item">Suivi de {{employee.firstname|capitalize}} {{employee.lastname|upper}}</li>
         </ul>
     </div>
+
+
     <div class="row">
         <div class="col-md-4">
             <div class="tile">
@@ -58,12 +61,7 @@
             <div class="tile">
 
                 <h3 class="title-title mb-4">Ajouter un temps</h3>
-                {% for message in app.flashes('success') %}
-                <div class="alert alert-dismissible alert-success my-4">
-                    <button class="close" type="button" data-dismiss="alert">×</button><strong>Super!</strong>
-                    {{message}}
-                </div>
-                {% endfor %}
+                {{ include('layout/messages/_flash_message.html.twig') }}
 
                 <div class="form-horizontal">
                     {{ form_start(form) }}

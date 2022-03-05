@@ -31,21 +31,16 @@ class HomeController extends AbstractController{
         $numberProduction = $this->assignedRepository->sumTotalTimeProduction();
 
         $sixLastEmployee = $this->employeeRepository->getSixLastEmployee();
-        $fiveLastProject = $this->projectRepository->getProjectCostProduction();
-        
-
-
-
+        $fiveLastProject = $this->projectRepository->getAllProjectWithCostProduction();
         
 
         return $this->render('home.html.twig', [
             'progress' => $projectsInProgress[0],
             'done' => $projectsDone[0],
             'numberEmployees' => $numberEmployees[0],
-            'dayProduction' => $numberProduction[0],
+            'dayProduction' => $numberProduction,
             'sixEmployee' => $sixLastEmployee,
             'fiveProject' =>  $fiveLastProject,
-
 
         ]);
     }

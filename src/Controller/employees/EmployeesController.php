@@ -18,7 +18,7 @@ class EmployeesController extends AbstractController{
     #[Route('/employees', name: "employees")]
     public function employeesPage(): Response
     {
-        $employees = $this->employeeRepo->findAll();
+        $employees = $this->employeeRepo->getAllEmployeeByDesc();
         return $this->render('pages/employees/employees.html.twig', [
             "employees" => $employees,
         ]);

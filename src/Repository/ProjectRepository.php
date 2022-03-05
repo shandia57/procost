@@ -25,17 +25,6 @@ class ProjectRepository extends ServiceEntityRepository
         $this->date = new \DateTime('now');
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(Project $entity, bool $flush = true): void
-    {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
 
     /**
      * @throws ORMException
@@ -47,6 +36,14 @@ class ProjectRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function getAllProjectByDesc() : array
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->orderBy('p.create_at', 'desc')
+        ; 
+        return $qb->getQuery()->getResult();
     }
 
     public function getNumberProjectInProgress(): array
@@ -75,7 +72,7 @@ class ProjectRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getProjectCostProduction(): array
+    public function getAllProjectWithCostProduction(): array
     {
         $qb = $this->createQueryBuilder('p')
         ->select("p.id,

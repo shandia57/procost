@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AssignedRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AssignedRepository::class)]
 class Assigned
@@ -14,15 +15,18 @@ class Assigned
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Project::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete:"CASCADE")]
+    #[Assert\NotBlank(message: 'Ce champ ne peut pas être vide')]
     private $project;
 
     
     #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank(message: 'Ce champ ne peut pas être vide')]
     private $time_production;
 
     #[ORM\ManyToOne(targetEntity: Employee::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'Ce champ ne peut pas être vide')]
     private $employee;
 
     #[ORM\Column(type: 'datetime')]

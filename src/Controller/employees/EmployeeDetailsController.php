@@ -36,14 +36,23 @@ class EmployeeDetailsController extends AbstractController{
         $form->handleRequest($request);
 
         if($form->isSubmitted()  && $form->isValid()){
-            $this->addFlash('success', 'Du temps a été ajouté avec succès !');
-            $this->assignedManager->save($assigned);
+
+            if($assigned->getProject()->getDelivery() != null){
+                $this->addFlash('danger', 'Ce projet est terminé, vous ne pouvez plus ajouté du temps supplémentaire !');
+            }else{
+                $this->addFlash('success', 'Du temps a été ajouté avec succès !');
+                $this->assignedManager->save($assigned);
+            }
+            
         }
+
+        $fullname = "  ";
 
         return $this->render('pages/employees/employees_details.html.twig', [
             'employee' => $employee, 
             'form' => $form->createView(),
             'assigned' => $allAssigned,
+            'fullname' => $fullname,
         ]);
     }
 }

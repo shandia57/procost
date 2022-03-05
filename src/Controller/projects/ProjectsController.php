@@ -18,7 +18,7 @@ class ProjectsController extends AbstractController{
     #[Route('/projects', name: "projects")]
     public function projectsPage(): Response
     {
-        $projects = $this->projectRepo->findAll();
+        $projects = $this->projectRepo->getAllProjectByDesc();
         
         return $this->render('pages/projects/projects.html.twig', [
             'projects' => $projects,

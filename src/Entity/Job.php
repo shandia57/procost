@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\JobRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: JobRepository::class)]
 class Job
@@ -14,10 +16,9 @@ class Job
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Ce champ ne peut pas être vide')]
     private $name;
 
-    #[ORM\OneToOne(mappedBy: 'job', targetEntity: Employee::class, cascade: ['persist', 'remove'])]
-    private $employee;
 
     public function getId(): ?int
     {
@@ -36,20 +37,7 @@ class Job
         return $this;
     }
 
-    public function getEmployee(): ?Employee
-    {
-        return $this->employee;
-    }
 
-    public function setEmployee(Employee $employee): self
-    {
-        // set the owning side of the relation if necessary
-        if ($employee->getJob() !== $this) {
-            $employee->setJob($this);
-        }
 
-        $this->employee = $employee;
 
-        return $this;
-    }
 }

@@ -33,7 +33,7 @@ class EmployeeCreateController extends AbstractController{
         }
 
 
-        return $this->render('pages/employees/employees_create.html.twig', [
+        return $this->render('pages/employees/employee_form.html.twig', [
             'form' => $form->createView(),
         ]);
     }

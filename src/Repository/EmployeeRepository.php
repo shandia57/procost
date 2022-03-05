@@ -23,17 +23,6 @@ class EmployeeRepository extends ServiceEntityRepository
         parent::__construct($registry, Employee::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(Employee $entity, bool $flush = true): void
-    {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
 
     /**
      * @throws ORMException
@@ -45,6 +34,14 @@ class EmployeeRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function getAllEmployeeByDesc() : array
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->orderBy('p.started_job', 'desc')
+        ; 
+        return $qb->getQuery()->getResult();
     }
 
     public function getNumberEmployee(): array{

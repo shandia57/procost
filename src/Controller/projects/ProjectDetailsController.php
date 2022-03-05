@@ -9,8 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Repository\ProjectRepository;
 use App\Repository\AssignedRepository;
-use App\Form\ProjectType;
 use App\Manager\ProjectManager;
+use App\Form\projects\DeleteProjectType;
+use App\Form\projects\FinishProjectType;
 
 class ProjectDetailsController extends AbstractController{
     private $date;
@@ -28,14 +29,24 @@ class ProjectDetailsController extends AbstractController{
     {
         $project = $this->projectRepo->find($id);
 
-        $form = $this->createForm(ProjectType::class, $project);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted()  && $form->isValid()){
-            $project->setDelivery($this->date);
-            $this->addFlash('success', 'Le projet est livré!');
-            $this->projectManager->save($project);
+        $formDelete = $this->createForm(DeleteProjectType::class, $project);
+        $formDelete->handleRequest($request);
+        if($formDelete->isSubmitted()  && $formDelete->isValid()){
+            $this->addFlash('success', 'Le projet a été supprimé!');
+            $this->projectRepo->remove($project);
+            return $this->redirectToRoute('projects');
         }
+
+        $formFinish = $this->createForm(FinishProjectType::class, $project);
+        $formFinish->handleRequest($request);
+        if($formFinish->isSubmitted()  && $formFinish->isValid()){
+            $project->setDelivery($this->date);
+            $this->projectManager->save($project);
+            $this->addFlash('success', 'Le projet est livré!');
+            
+        }
+
+
 
 
         $allAssigned = $this->assignedRepo->findAssignedPerProject($id);
@@ -47,11 +58,12 @@ class ProjectDetailsController extends AbstractController{
         return $this->render('pages/projects/project_details.html.twig', [
             'project' => $project,
             'assigned' => $allAssigned,
-            'numberEmployee' => $numberEmployee[0],
-            'costProduction' => $costProduction[0],
-            'timeProduction' => $timeProduction[0],
-            'projectCost' => $projectCost[0],
-            'form' => $form->createView(),
+            'numberEmployee' => $numberEmployee,
+            'costProduction' => $costProduction,
+            'timeProduction' => $timeProduction,
+            'projectCost' => $projectCost,
+            'formDelete' => $formDelete->createView(),
+            'formFinish' => $formFinish->createView(),
         ]);
 
     }

@@ -1,31 +1,25 @@
 {% extends 'layout/base.html.twig' %}
 
-{% block title %} Modification d'un employé - PROCOST{% endblock %}
+{% block title %} Edition d'un employé - PROCOST{% endblock %}
 
 {% block body %}
 
 
 <main class="app-content">
-    <div class="app-title">
-        <div>
-            <h1><i class="fa fa-users"></i>&nbsp;Modification d'un employé</h1>
-        </div>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="#"><i class="fa fa-home fa-lg"></i></a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href={{path('employees')}}>Employés</a>
-            </li>
-            <li class="breadcrumb-item">Modification d'un employé</li>
-        </ul>
-    </div>
+
+
+    {{
+        include('layout/template/_banner_page_with_link.html.twig', 
+    {
+        'current_page': "Edition d'un employé", 
+        'previous_page': "Employés",
+        'path' : "employees"
+
+    })
+}}
+
     <div class="tile">
-        {% for message in app.flashes('success') %}
-        <div class="alert alert-dismissible alert-success my-4">
-            <button class="close" type="button" data-dismiss="alert">×</button><strong>Super!</strong> {{message}}
-        </div>
-        {% endfor %}
+        {{ include('layout/messages/_flash_message.html.twig') }}
         <div class="form-horizontal">
             {{ form_start(form) }}
 

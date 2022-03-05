@@ -32,9 +32,10 @@ class EmployeeUpdateController extends AbstractController{
         if($form->isSubmitted()  && $form->isValid()){
             $this->addFlash('success', 'L\'employée a été modifié avec succès !');
             $this->employeeManager->save($employee);
+            return $this->redirectToRoute('employees');
         }
 
-        return $this->render('pages/employees/employees_update.html.twig', [
+        return $this->render('pages/employees/employee_form.html.twig', [
             'employee' => $employee, 
             'form' => $form->createView(),
         ]);
