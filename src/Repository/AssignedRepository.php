@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Assigned;
 use App\Entity\Employee;
+use App\Entity\Project;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -93,11 +94,32 @@ class AssignedRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function sumTotalTimeProduction() : array
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select("SUM(p.time_production) as time")
+        ;
+        return $qb->getQuery()->getResult();
+    }
+
     public function sumTimeProductionPerProject(int $id): ?array
     {
         $qb = $this->createQueryBuilder('p')
         ->select('SUM(p.time_production) as time')
         ->where('p.project = :id')
+        ->setParameter('id', $id)
+    ;
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getProjectCostProduction($id): array{
+        $qb = $this->createQueryBuilder('p')
+        ->select("SUM(employee.cost * p.time_production) as cost")
+        ->join(Project::class, "project")
+        ->join(Employee::class, "employee")
+        ->where('p.project = :id')
+        ->andWhere("project.id = p.project")
+        ->andWhere("p.employee = employee.id")
         ->setParameter('id', $id)
     ;
         return $qb->getQuery()->getResult();

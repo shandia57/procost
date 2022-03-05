@@ -18,7 +18,7 @@
                         <i class="icon fa fa-spinner fa-3x" aria-hidden="true"></i>
                         <div class="info">
                             <p class="text-muted text-sm text-uppercase">Projets en cours</p>
-                            <p><strong>11</strong></p>
+                            <p><strong>{{progress.project}}</strong></p>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                         <i class="icon fa fa-check-square-o fa-3x" aria-hidden="true"></i>
                         <div class="info">
                             <p class="text-muted text-sm text-uppercase">Projets livrés</p>
-                            <p><strong>76</strong></p>
+                            <p><strong>{{done.project}}</strong></p>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                         <i class="icon fa fa-users fa-3x"></i>
                         <div class="info">
                             <p class="text-muted text-sm text-uppercase">Employés</p>
-                            <p><strong>34</strong></p>
+                            <p><strong>{{numberEmployees.employees}}</strong></p>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                         <i class="icon fa fa-calendar-check-o fa-3x" aria-hidden="true"></i>
                         <div class="info">
                             <p class="text-muted text-sm text-uppercase">Jours de production</p>
-                            <p><strong>267</strong></p>
+                            <p><strong>{{dayProduction.time}}</strong></p>
                         </div>
                     </div>
                 </div>
@@ -115,61 +115,25 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for project in fiveProject %}
                         <tr>
                             <th>
-                                <a href="#">Mon projet</a>
+                                <a href={{path('project_details', {'id': project.id})}}>{{project.name}}</a>
                             </th>
-                            <th>18/03/2018</th>
-                            <th>20 000 €</th>
-                            <th>3 200 €</th>
+                            <th>{{project.create_at|date("d/m/Y", false)}}</th>
+                            <th>{{project.price|number_format(2, '.', ' ')}}€</th>
+                            <th>{{project.cost|number_format(2, '.', ' ')}}€</th>
                             <th>
+                                {% if project.delivery != null %}
                                 <span class="badge badge-success">OUI</span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <a href="#">Mon projet</a>
-                            </th>
-                            <th>18/03/2018</th>
-                            <th>20 000 €</th>
-                            <th>3 200 €</th>
-                            <th>
-                                <span class="badge badge-success">OUI</span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <a href="#">Mon projet</a>
-                            </th>
-                            <th>18/03/2018</th>
-                            <th>20 000 €</th>
-                            <th>3 200 €</th>
-                            <th>
-                                <span class="badge badge-success">OUI</span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <a href="#">Mon projet</a>
-                            </th>
-                            <th>18/03/2018</th>
-                            <th>20 000 €</th>
-                            <th>3 200 €</th>
-                            <th>
-                                <span class="badge badge-success">OUI</span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <a href="#">Mon projet</a>
-                            </th>
-                            <th>18/03/2018</th>
-                            <th>20 000 €</th>
-                            <th>3 200 €</th>
-                            <th>
+                                {% else %}
                                 <span class="badge badge-danger">NON</span>
+                                {% endif %}
+
                             </th>
                         </tr>
+                        {% endfor %}
+
                     </tbody>
                 </table>
             </div>
@@ -178,30 +142,21 @@
             <div class="tile">
                 <h2 class="tile-title text-center">Temps de production</h2>
                 <ul class="list-group">
+
+                    {% for employee in sixEmployee %}
                     <li class="list-group-item">
-                        <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                        <div class="text-muted font-italic text-right">4 jours</div>
+                        <a href={{path('employees_details', {'id': employee.id})}}>{{employee.firstname|capitalize}}
+                            {{employee.lastname|upper}}</a> a travaillé sur <a
+                            href={{path('project_details', {'id': employee.projectId})}}>{{employee.name}}</a>
+                        <div class="text-muted font-italic text-right">{{employee.time_production}}
+                            {% if employee.time_production > 1 %}
+                            jours
+                            {% else %}
+                            jour
+                            {% endif %}
+                        </div>
                     </li>
-                    <li class="list-group-item">
-                        <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                        <div class="text-muted font-italic text-right">4 jours</div>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                        <div class="text-muted font-italic text-right">4 jours</div>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                        <div class="text-muted font-italic text-right">4 jours</div>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                        <div class="text-muted font-italic text-right">4 jours</div>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                        <div class="text-muted font-italic text-right">4 jours</div>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
