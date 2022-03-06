@@ -15,13 +15,19 @@ class ProjectsController extends AbstractController{
         
     }
 
-    #[Route('/projects', name: "projects")]
-    public function projectsPage(): Response
+    #[Route('/projects?page={page}', name: "projects")]
+    public function projectsPage(int $page): Response
     {
         $projects = $this->projectRepo->getAllProjectByDesc();
+        $newArray = array_chunk($projects,10);
         
         return $this->render('pages/projects/projects.html.twig', [
-            'projects' => $projects,
+            'projects' => $newArray[$page]??null,
+            "numberPage" =>$newArray,
+            "currentPage" => $page + 1,
+            "page" => $page,
+            "minPage" => 0,
+            "maxPage" => count($newArray),
         ]);
     }
 

@@ -24,11 +24,13 @@ class EmployeeDetailsController extends AbstractController{
         
     }
 
-    #[Route('/employees/details/{id}', name: "employees_details")]
-    public function employeesDetailsPage(int $id, Request $request): Response
+    #[Route('/employees/details/{id}?page={page}', name: "employees_details")]
+    public function employeesDetailsPage(int $id, int $page, Request $request): Response
     {
         $employee = $this->employeeRepo->find($id);
         $allAssigned = $this->assignedRepo->findAssignedPerEmployee($id);
+        $newArray = array_chunk($allAssigned,10);
+
         $assigned = new Assigned();
         $assigned->setEmployee($employee);
 
@@ -51,8 +53,14 @@ class EmployeeDetailsController extends AbstractController{
         return $this->render('pages/employees/employees_details.html.twig', [
             'employee' => $employee, 
             'form' => $form->createView(),
-            'assigned' => $allAssigned,
+            'assigned' => $newArray[$page]??null,
             'fullname' => $fullname,
+            "numberPage" =>$newArray,
+            "currentPage" => $page + 1,
+            'id' => $id,
+            "page" => $page,
+            "minPage" => 0,
+            "maxPage" => count($newArray) ,
         ]);
     }
 }

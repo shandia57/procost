@@ -114,6 +114,45 @@
 
             </div>
 
+            <div class="tile">
+
+                <h3 class="title-title mb-4">Ajouter un temps</h3>
+                {{ include('layout/messages/_flash_message.html.twig') }}
+
+                <div class="form-horizontal">
+                    {{ form_start(formAddTime) }}
+
+                    <div class="form-group row">
+                        {{ form_label(formAddTime.employee, formAddTime.employee, {'label_attr': {'class': 'control-label col-md-6'}})
+                        }}
+                        <div class="col-md-6">
+                            {{form_widget(formAddTime.employee, {'attr': {'class': 'form-control' }})}}
+                            <div class="form-control-feedback text-danger">
+                                {{form_errors(formAddTime.employee)}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        {{ form_label(formAddTime.time_production, formAddTime.time_production, {'label_attr': {'class': 'control-label col-md-6'}})
+                        }}
+                        <div class="col-md-6">
+                            {{form_widget(formAddTime.time_production, {'attr': {'class': 'form-control' }})}}
+                            <div class="form-control-feedback text-danger">
+                                {{form_errors(formAddTime.time_production)}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-md-6 col-md-8">
+                            <button type="submit" class="btn btn-success" {% if project.delivery != null %} disabled
+                                {% endif %}><i class="fa fa-save"></i>Enregistrer</a>
+                        </div>
+                    </div>
+                    {{ form_end(formAddTime) }}
+                </div>
+
+            </div>
+
         </div>
 
 
@@ -145,24 +184,11 @@
                 </div>
                 <hr />
                 <nav class="float-right">
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <span class="page-link">&laquo;</span>
-                        </li>
-                        <li class="page-item active" aria-current="page">
-                            <span class="page-link">1<span class="sr-only">(current)</span></span>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">&raquo;</a>
-                        </li>
-                    </ul>
+                    {{include('layout/template/_pagination_with_data.html.twig', 
+                    {
+                        'path' : "project_details"
+                    }
+                )}}
                 </nav>
             </div>
         </div>

@@ -52,21 +52,21 @@
             </li>
             <li>
                 <a class="app-menu__item {% if  app.request.attributes.get('_route')  starts with "project"  %} active {% endif %}"
-                    href={{path('projects')}}>
+                    href={{path('projects', {'page':0})}}>
                     <i class="app-menu__icon fa fa-laptop"></i>
                     <span class="app-menu__label">Projets</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item {% if  app.request.attributes.get('_route')  starts with "employee"  %} active {% endif %}"
-                    href={{path('employees')}}>
+                    href={{path('employees',{'page': 0} )}}>
                     <i class="app-menu__icon fa fa-users"></i>
                     <span class="app-menu__label">Employés</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item {% if  app.request.attributes.get('_route')  starts with "job"  %} active {% endif %}"
-                    href={{path('jobs')}}>
+                    href={{path('jobs', {'page':0})}}>
                     <i class="app-menu__icon fa fa-book"></i>
                     <span class="app-menu__label">Métiers</span>
                 </a>

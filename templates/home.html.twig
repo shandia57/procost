@@ -118,7 +118,7 @@
                         {% for project in fiveProject %}
                         <tr>
                             <th>
-                                <a href={{path('project_details', {'id': project.id})}}>{{project.name}}</a>
+                                <a href={{path('project_details', {'id': project.id, 'page':0})}}>{{project.name}}</a>
                             </th>
                             <th>{{project.create_at|date("d/m/Y", false)}}</th>
                             <th>{{project.price|number_format(2, '.', ' ')}}€</th>
@@ -145,9 +145,9 @@
 
                     {% for employee in sixEmployee %}
                     <li class="list-group-item">
-                        <a href={{path('employees_details', {'id': employee.id})}}>{{employee.firstname|capitalize}}
+                        <a href={{path('employees_details', {'id': employee.id, 'page':0})}}>{{employee.firstname|capitalize}}
                             {{employee.lastname|upper}}</a> a travaillé sur <a
-                            href={{path('project_details', {'id': employee.projectId})}}>{{employee.name}}</a>
+                            href={{path('project_details', {'id': employee.projectId, 'page':0})}}>{{employee.name}}</a>
                         <div class="text-muted font-italic text-right">{{employee.time_production}}
                             {% if employee.time_production > 1 %}
                             jours

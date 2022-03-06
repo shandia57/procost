@@ -37,7 +37,9 @@ class ProjectUpdateController extends AbstractController{
             }else{
                 $this->addFlash('success', 'Le projet a correctement modifié !');
                 $this->projectManager->save($project);
-                return $this->redirectToRoute('projects');
+                return $this->redirectToRoute('projects', [
+                    'page' => 0
+                ] );
             }
             
         }

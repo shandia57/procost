@@ -16,7 +16,7 @@
                 <a href="#"><i class="fa fa-home fa-lg"></i></a>
             </li>
             <li class="breadcrumb-item">
-                <a href={{path('employees')}}>Employés</a>
+                <a href={{path('employees', {'page': 0})}}>Employés</a>
             </li>
             <li class="breadcrumb-item">Suivi de {{employee.firstname|capitalize}} {{employee.lastname|upper}}</li>
         </ul>
@@ -125,24 +125,11 @@
                 </div>
                 <hr />
                 <nav class="float-right">
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <span class="page-link">&laquo;</span>
-                        </li>
-                        <li class="page-item active" aria-current="page">
-                            <span class="page-link">1<span class="sr-only">(current)</span></span>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">&raquo;</a>
-                        </li>
-                    </ul>
+                    {{include('layout/template/_pagination_with_data.html.twig', 
+                    {
+                        'path' : "employees_details"
+                    }
+                )}}
                 </nav>
             </div>
         </div>

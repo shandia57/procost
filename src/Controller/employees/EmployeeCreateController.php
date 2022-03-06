@@ -29,7 +29,9 @@ class EmployeeCreateController extends AbstractController{
         if($form->isSubmitted()  && $form->isValid()){
             $this->addFlash('success', 'L\'employée a été créée avec succès !');
             $this->employeeManager->save($employee);
-            return $this->redirectToRoute('employees');
+            return $this->redirectToRoute('employees', [
+                'page' => 0,
+            ]);
         }
 
 

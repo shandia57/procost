@@ -15,12 +15,21 @@ class EmployeesController extends AbstractController{
         
     }
 
-    #[Route('/employees', name: "employees")]
-    public function employeesPage(): Response
+    #[Route('/employees?page={page}', name: "employees")]
+    public function employeesPage(int $page): Response
     {
+
         $employees = $this->employeeRepo->getAllEmployeeByDesc();
+        $newArray = array_chunk($employees,10);
+
+
         return $this->render('pages/employees/employees.html.twig', [
-            "employees" => $employees,
+            "employees" => $newArray[$page]??null,
+            "numberPage" =>$newArray,
+            "currentPage" => $page + 1,
+            "page" => $page,
+            "minPage" => 0,
+            "maxPage" => count($newArray) ,
         ]);
     }
 

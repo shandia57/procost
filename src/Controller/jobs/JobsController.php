@@ -15,12 +15,18 @@ class JobsController extends AbstractController{
         
     }
 
-    #[Route('/jobs', name: "jobs")]
-    public function projectsPage(): Response
+    #[Route('/jobs?page={page}', name: "jobs")]
+    public function projectsPage(int $page): Response
     {
         $jobs = $this->jobRepo->findAll();
+        $newArray = array_chunk($jobs,10);
         return $this->render('pages/jobs/jobs.html.twig', [
-            'jobs' => $jobs,
+            'jobs' => $newArray[$page]??null,
+            "numberPage" =>$newArray,
+            "currentPage" => $page + 1,
+            "page" => $page,
+            "minPage" => 0,
+            "maxPage" => count($newArray) ,
         ]);
     }
 }

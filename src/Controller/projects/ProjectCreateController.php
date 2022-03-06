@@ -29,7 +29,9 @@ class ProjectCreateController extends AbstractController{
         if($form->isSubmitted()  && $form->isValid()){
             $this->addFlash('success', 'Le projet a été créée avec succès !');
             $this->projectManager->save($project);
-            return $this->redirectToRoute('projects');
+            return $this->redirectToRoute('projects', [
+                'page' => 0
+            ] );
         }
 
         return $this->render('pages/projects/project_form.html.twig', [

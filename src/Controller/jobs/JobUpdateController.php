@@ -30,7 +30,9 @@ class JobUpdateController extends AbstractController{
         if($form->isSubmitted()  && $form->isValid()){
             $this->addFlash('success', 'Le métier a été modifié avec succès !');
             $this->jobManager->save($job);
-            return $this->redirectToRoute('jobs');
+            return $this->redirectToRoute('jobs', [
+                'page' => 0
+            ]);
         }
 
 
