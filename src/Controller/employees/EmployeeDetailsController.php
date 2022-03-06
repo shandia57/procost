@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Assigned;
-use App\Form\AssignedType;
+use App\Form\assigned\AssignedType;
 use App\Manager\AssignedManager;
 
 use App\Repository\EmployeeRepository;

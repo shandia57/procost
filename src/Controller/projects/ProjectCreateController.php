@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Project;
-use App\Form\ProjectType;
+use App\Form\project\ProjectType;
 use App\Manager\ProjectManager;
 
 

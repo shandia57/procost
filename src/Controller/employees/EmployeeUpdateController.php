@@ -8,8 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Repository\EmployeeRepository;
-use App\Entity\Employee;
-use App\Form\EmployeeType;
+use App\Form\employee\EmployeeType;
 use App\Manager\EmployeeManager;
 
 class EmployeeUpdateController extends AbstractController{
