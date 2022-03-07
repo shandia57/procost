@@ -56,6 +56,8 @@ class AssignedRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('p')
         ->where('p.employee = :id')
         ->setParameter('id', $id)
+        ->orderBy('p.published_at', 'DESC')
+
     ;
         return $qb->getQuery()->getResult();
     }
@@ -68,6 +70,8 @@ class AssignedRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('p')
         ->where('p.project = :id')
         ->setParameter('id', $id)
+        ->orderBy('p.published_at', 'DESC')
+
     ;
         return $qb->getQuery()->getResult();
     }

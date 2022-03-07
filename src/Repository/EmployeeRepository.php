@@ -51,7 +51,7 @@ class EmployeeRepository extends ServiceEntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    public function getSixLastEmployee() : array
+    public function getTenLastEmployee() : array
     {
         $qb = $this->createQueryBuilder('p')
             ->select("
@@ -67,7 +67,7 @@ class EmployeeRepository extends ServiceEntityRepository
             ->where("p.id = assigned.employee")
             ->andwhere("assigned.project = project.id")
             ->orderBy('assigned.published_at', 'DESC')
-            ->setMaxResults(6)
+            ->setMaxResults(10)
         ; 
 
         return $qb->getQuery()->getResult();

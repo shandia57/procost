@@ -32,7 +32,7 @@ class HomeController extends AbstractController{
         $numberEmployees = $this->employeeRepository->getNumberEmployee();
         $numberProduction = $this->assignedRepository->sumTotalTimeProduction();
 
-        $sixLastEmployee = $this->employeeRepository->getSixLastEmployee();
+        $sixLastEmployee = $this->employeeRepository->getTenLastEmployee();
         $fiveLastProject = $this->projectRepository->getAllProjectWithCostProduction();
         
         

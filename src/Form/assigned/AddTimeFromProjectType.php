@@ -17,7 +17,7 @@ class AddTimeFromProjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options) : void
     {
         $builder
-            ->add('time_production', IntegerType::class, ['label' => 'Coût de production'])
+            ->add('time_production', IntegerType::class, ['label' => 'Temps de production'])
             ->add('employee', EntityType::class, [
                 'class' => Employee::class,
                 'label' => 'Employé',

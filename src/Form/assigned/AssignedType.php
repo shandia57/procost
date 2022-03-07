@@ -18,7 +18,7 @@ class AssignedType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options) : void
     {
         $builder
-            ->add('time_production', IntegerType::class, ['label' => 'Coût de production'])
+            ->add('time_production', IntegerType::class, ['label' => 'Temps de production'])
             ->add('project', EntityType::class, [
                 'class' => Project::class,
                 'label' => 'Projet',

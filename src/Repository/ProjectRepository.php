@@ -88,6 +88,8 @@ class ProjectRepository extends ServiceEntityRepository
         ->where("p.id = assigned.project")
         ->andWhere("assigned.employee = employee.id")
         ->groupBy('p.name')
+        ->orderBy('p.delivery', 'DESC')
+        ->setMaxResults(5);
 
     ;
         return $qb->getQuery()->getResult();
