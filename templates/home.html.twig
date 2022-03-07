@@ -56,7 +56,7 @@
                         <div class="card-header text-center">Rentabilité</div>
                         <div class="card-body">
                             <p class="text-muted">
-                                <i class="fa fa-database mr-2 text-primary"></i> 70% RENTABLE
+                                <i class="fa fa-database mr-2 text-primary"></i> {{cost}}% RENTABLE
                             </p>
                             <div class="embed-responsive embed-responsive-16by9">
                                 <canvas id="ratio-chart" class="embed-responsive-item"></canvas>
@@ -69,7 +69,7 @@
                         <div class="card-header text-center">Taux de livraison</div>
                         <div class="card-body">
                             <p class="text-muted">
-                                <i class="fa fa fa-check-square-o mr-2 text-primary"></i> 35% Livrés
+                                <i class="fa fa fa-check-square-o mr-2 text-primary"></i> {{deliveryRate}}% Livrés
                             </p>
                             <div class="embed-responsive embed-responsive-16by9">
                                 <canvas id="delivered-chart" class="embed-responsive-item"></canvas>
@@ -84,17 +84,17 @@
                             <div class="text-center">
                                 <img src="img/ui-zac.jpg" class="rounded-circle" width="58">
                                 <p class="mt-2">
-                                    <strong>Zac Producteur</strong>
+                                    <strong>{{topEmployee.firstname|capitalize}} {{topEmployee.lastname|upper}}</strong>
                                 </p>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="small mt">EMPLOYÉ DEPUIS</p>
-                                    <p>Février 2012</p>
+                                    <p>{{topEmployee.started_job|date("F/Y", false)}}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="small mt">COÛT TOTAL</p>
-                                    <p>34 567 €</p>
+                                    <p>{{topEmployee.cost|number_format(2, '.', ' ')}} €</p>
                                 </div>
                             </div>
                         </div>
@@ -161,6 +161,7 @@
             </div>
         </div>
     </div>
+
 </main>
 
 

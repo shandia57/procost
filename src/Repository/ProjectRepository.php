@@ -46,13 +46,14 @@ class ProjectRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+
     public function getNumberProjectInProgress(): array
     {
         $qb = $this->createQueryBuilder('p')
         ->select('COUNT(1) as project')
         ->where("p.delivery IS NULL ")
     ;
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function getNumberProjectDone(): array
@@ -61,7 +62,7 @@ class ProjectRepository extends ServiceEntityRepository
         ->select('COUNT(1) as project')
         ->where("p.delivery IS NOT NULL ")
     ;
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function getLastFiveProject(): array
@@ -86,6 +87,27 @@ class ProjectRepository extends ServiceEntityRepository
         ->join(Employee::class, "employee")
         ->where("p.id = assigned.project")
         ->andWhere("assigned.employee = employee.id")
+        ->groupBy('p.name')
+
+    ;
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getAllProjectDelevereidWithCostProduction() : array
+    {
+        $qb = $this->createQueryBuilder('p')
+        ->select("p.id,
+            SUM(employee.cost * assigned.time_production) as cost, 
+            p.name, 
+            p.create_at, 
+            p.delivery,
+            p.price"
+        )
+        ->join(Assigned::class, "assigned")
+        ->join(Employee::class, "employee")
+        ->where("p.id = assigned.project")
+        ->andWhere("assigned.employee = employee.id")
+        ->andWhere("p.delivery != 'NULL' ")
         ->groupBy('p.name')
 
     ;

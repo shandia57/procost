@@ -22,6 +22,8 @@ class HomeController extends AbstractController{
         $this->date = new \DateTime('now');
     }
 
+
+
     #[Route('/', name: "home")]
     public function homePage(): Response
     {
@@ -33,14 +35,37 @@ class HomeController extends AbstractController{
         $sixLastEmployee = $this->employeeRepository->getSixLastEmployee();
         $fiveLastProject = $this->projectRepository->getAllProjectWithCostProduction();
         
+        
+        $projectDeliveried = $this->projectRepository->getAllProjectDelevereidWithCostProduction();
+        $numberCostProject = 0;
+        foreach($projectDeliveried as $project){
+            if($project['price'] < $project['cost']){
+                $numberCostProject ++;
+            }
+        }
+        $profitabilityRate = $numberCostProject / $projectsDone['project'] * 100;
+
+        $deliveryRate = round($projectsDone['project'] / ( $projectsDone['project'] + $projectsInProgress['project'] ) * 100, 0);
+        
+
+        $employeesWithCostProduction = $this->employeeRepository->getEmployeesWithTotalCostProduction();
+        $maxValue = max(array_column($employeesWithCostProduction, 'cost'));
+        $keynew = 0;
+        foreach($employeesWithCostProduction as $key => $employee){
+            if($employee['cost'] == $maxValue) $keynew = $key;
+        }
+
 
         return $this->render('home.html.twig', [
-            'progress' => $projectsInProgress[0],
-            'done' => $projectsDone[0],
-            'numberEmployees' => $numberEmployees[0],
+            'progress' => $projectsInProgress,
+            'done' => $projectsDone,
+            'numberEmployees' => $numberEmployees,
             'dayProduction' => $numberProduction,
             'sixEmployee' => $sixLastEmployee,
             'fiveProject' =>  $fiveLastProject,
+            'deliveryRate' => $deliveryRate ,
+            'cost' => $profitabilityRate,
+            'topEmployee' => $employeesWithCostProduction[$keynew]
 
         ]);
     }

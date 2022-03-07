@@ -48,7 +48,7 @@ class EmployeeRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('p')
         ->select('COUNT(1) as employees')
     ;
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function getSixLastEmployee() : array
@@ -70,6 +70,17 @@ class EmployeeRepository extends ServiceEntityRepository
             ->setMaxResults(6)
         ; 
 
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getEmployeesWithTotalCostProduction() : array
+    {
+        $qb = $this->createQueryBuilder('p')
+         ->select('p.firstname, p.lastname, p.started_job, SUM(p.cost * assigned.time_production) as cost')
+         ->join(Assigned::class, 'assigned')
+         ->where('p.id = assigned.employee')
+         ->groupBy('p.firstname')
+        ;
         return $qb->getQuery()->getResult();
     }
 }
