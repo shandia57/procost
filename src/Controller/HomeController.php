@@ -43,16 +43,24 @@ class HomeController extends AbstractController{
                 $numberCostProject ++;
             }
         }
-        $profitabilityRate = $numberCostProject / $projectsDone['project'] * 100;
+        $profitabilityRate = 0;
+        $deliveryRate = 0;
+        if( $projectsDone['project'] != 0){
+            $profitabilityRate =  $numberCostProject / $projectsDone['project'] * 100;
+            $deliveryRate = round($projectsDone['project'] / ( $projectsDone['project'] + $projectsInProgress['project'] ) * 100, 0);
 
-        $deliveryRate = round($projectsDone['project'] / ( $projectsDone['project'] + $projectsInProgress['project'] ) * 100, 0);
-        
+        }
+
+
 
         $employeesWithCostProduction = $this->employeeRepository->getEmployeesWithTotalCostProduction();
-        $maxValue = max(array_column($employeesWithCostProduction, 'cost'));
         $keynew = 0;
-        foreach($employeesWithCostProduction as $key => $employee){
-            if($employee['cost'] == $maxValue) $keynew = $key;
+        if($employeesWithCostProduction != null){
+            $maxValue = max(array_column($employeesWithCostProduction, 'cost'));
+            
+            foreach($employeesWithCostProduction as $key => $employee){
+                if($employee['cost'] == $maxValue) $keynew = $key;
+            }
         }
 
 
@@ -65,7 +73,7 @@ class HomeController extends AbstractController{
             'fiveProject' =>  $fiveLastProject,
             'deliveryRate' => $deliveryRate ,
             'cost' => $profitabilityRate,
-            'topEmployee' => $employeesWithCostProduction[$keynew]
+            'topEmployee' => $employeesWithCostProduction[$keynew]??null,
 
         ]);
     }

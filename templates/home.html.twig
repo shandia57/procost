@@ -84,17 +84,37 @@
                             <div class="text-center">
                                 <img src="img/ui-zac.jpg" class="rounded-circle" width="58">
                                 <p class="mt-2">
-                                    <strong>{{topEmployee.firstname|capitalize}} {{topEmployee.lastname|upper}}</strong>
+                                    <strong>
+                                        {% if topEmployee != null %}
+                                        {{topEmployee.firstname|capitalize}} {{topEmployee.lastname|upper}}
+                                        {% else %}
+                                        Personne trouvé !
+                                        {% endif %}
+                                    </strong>
                                 </p>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="small mt">EMPLOYÉ DEPUIS</p>
-                                    <p>{{topEmployee.started_job|date("F/Y", false)}}</p>
+                                    <p>
+                                        {% if topEmployee != null %}
+                                        {{topEmployee.started_job|date("F/Y", false)}}
+                                        {% else %}
+                                        Aucune date !
+                                        {% endif %}
+
+                                    </p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="small mt">COÛT TOTAL</p>
-                                    <p>{{topEmployee.cost|number_format(2, '.', ' ')}} €</p>
+                                    <p>
+                                        {% if topEmployee != null %}
+                                        {{topEmployee.cost|number_format(2, '.', ' ')}} €
+                                        {% else %}
+                                        0 €
+                                        {% endif %}
+
+                                    </p>
                                 </div>
                             </div>
                         </div>
