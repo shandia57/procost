@@ -46,7 +46,7 @@ class HomeController extends AbstractController{
         $profitabilityRate = 0;
         $deliveryRate = 0;
         if( $projectsDone['project'] != 0){
-            $profitabilityRate =  $numberCostProject / $projectsDone['project'] * 100;
+            $profitabilityRate = (1 - ($numberCostProject / $projectsDone['project'])) * 100;
             $deliveryRate = round($projectsDone['project'] / ( $projectsDone['project'] + $projectsInProgress['project'] ) * 100, 0);
 
         }
