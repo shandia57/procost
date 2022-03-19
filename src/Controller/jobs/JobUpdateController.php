@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use App\Form\job\JobType;
 use App\Manager\JobManager;
@@ -23,6 +24,12 @@ class JobUpdateController extends AbstractController{
     public function projectsCreatePage(int $id, Request $request): Response
     {
         $job = $this->jobRepository->find($id);
+        if($job === null)
+        {
+            throw new NotFoundHttpException('job '.$id.' not found!');
+        }
+
+
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
 

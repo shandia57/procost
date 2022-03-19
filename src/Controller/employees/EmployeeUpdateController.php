@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use App\Repository\EmployeeRepository;
 use App\Form\employee\EmployeeType;
@@ -25,6 +26,11 @@ class EmployeeUpdateController extends AbstractController{
     public function employeesDetailsPage(int $id, Request $request): Response
     {
         $employee = $this->employeeRepo->find($id);
+        if($employee === null)
+        {
+            throw new NotFoundHttpException('employee '.$id.' not found!');
+        }
+
         $form = $this->createForm(EmployeeType::class, $employee);
         $form->handleRequest($request);
 

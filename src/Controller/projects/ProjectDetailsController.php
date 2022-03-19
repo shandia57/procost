@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 use App\Entity\Assigned;
@@ -17,6 +18,7 @@ use App\Manager\ProjectManager;
 use App\Form\projects\DeleteProjectType;
 use App\Form\projects\FinishProjectType;
 use App\Form\assigned\AddTimeFromProjectType;
+
 
 class ProjectDetailsController extends AbstractController{
     private $date;
@@ -34,9 +36,12 @@ class ProjectDetailsController extends AbstractController{
     public function projectsDetailsPage(int $id,int $page, Request $request): Response
     {
         $project = $this->projectRepo->find($id);
+        if($project === null)
+        {
+            throw new NotFoundHttpException('project '.$id.' not found!');
+        }
 
         // Form : delete the current project
-
         $formDelete = $this->createForm(DeleteProjectType::class, $project);
         $formDelete->handleRequest($request);
         if($formDelete->isSubmitted()  && $formDelete->isValid()){

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use App\Entity\Project;
 use App\Form\project\ProjectType;
@@ -27,6 +28,11 @@ class ProjectUpdateController extends AbstractController{
     public function projectsUpdatePage(int $id, Request $request): Response
     {
         $project = $this->projectRepo->find($id);
+        if($project === null)
+        {
+            throw new NotFoundHttpException('project '.$id.' not found!');
+        }
+
 
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);

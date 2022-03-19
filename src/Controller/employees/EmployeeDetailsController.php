@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 
 use App\Entity\Assigned;
 use App\Form\assigned\AssignedType;
@@ -28,6 +30,11 @@ class EmployeeDetailsController extends AbstractController{
     public function employeesDetailsPage(int $id, int $page, Request $request): Response
     {
         $employee = $this->employeeRepo->find($id);
+        if($employee === null)
+        {
+            throw new NotFoundHttpException('employee '.$id.' not found!');
+        }
+        
         $allAssigned = $this->assignedRepo->findAssignedPerEmployee($id);
         $newArray = array_chunk($allAssigned,10);
 
